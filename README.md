@@ -93,9 +93,7 @@ value = (toupper(input[i])-64)-(toupper(key[j])-64);
 if( value < 0)
 { value = value * -1;
 }
-printf("%c",65 + (value % 26));
-}
-}
+printf("%c",65 + (value % 26));}}
 ```
 
 ## OUTPUT:
