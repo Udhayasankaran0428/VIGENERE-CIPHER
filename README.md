@@ -91,7 +91,7 @@ if( value < 0)
 printf("%c",65 + (value % 26));}}
 ```
 ## OUTPUT:
-<img width="457" height="828" alt="image" src="https://github.com/user-attachments/assets/46f8d0c4-1f7c-44af-8bec-ca94d4bbf491" />
+<img width="457" height="800" alt="image" src="https://github.com/user-attachments/assets/46f8d0c4-1f7c-44af-8bec-ca94d4bbf491" />
 
 ## RESULT:
 The program is executed successfully
