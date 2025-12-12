@@ -31,64 +31,53 @@ STEP-8: Repeat the above steps to generate the entire cipher text.
 #include <stdio.h>
 #include <ctype.h>
 #include <string.h>
-#include<stdlib.h>
-void encipher();
-void decipher();
-void main()
-{
-int choice;
-while(1)
-{
-printf("\n1. Encrypt Text");
-printf("\t2. Decrypt Text");
-printf("\t3. Exit");
-printf("\n\nEnter Your Choice : ");
-scanf("%d",&choice);
-if(choice == 3)
-break;
-else if(choice == 1)
-encipher();
-else if(choice == 2)
-decipher();
-else
-printf("Please Enter Valid Option.");
- }
+
+static void strip(char *s){ size_t n=strcspn(s,"\n"); s[n]=0; }
+
+int main(void){
+    int choice;
+    char t[128], k[128];
+    for(;;){
+        puts("\n1. Encrypt Text 2. Decrypt Text 3. Exit");
+        printf("\nEnter Your Choice : ");
+        if (scanf("%d",&choice)!=1) break;
+        while(getchar()!='\n');              /* flush newline */
+
+        if(choice==3) break;
+
+        if(choice==1){
+            printf("\nEnter Plain Text: ");
+            if(!fgets(t,sizeof t,stdin)) break; strip(t);
+            printf("\nEnter Key Value: ");
+            if(!fgets(k,sizeof k,stdin)) break; strip(k);
+
+            printf("\nResultant Cipher Text: ");
+            for(size_t i=0,j=0;i<strlen(t);++i){
+                char p = toupper((unsigned char)t[i]);
+                if(p<'A'||p>'Z'){ putchar(t[i]); continue; }
+                char key = toupper((unsigned char)k[j++%strlen(k)]);
+                putchar((char)(((p-'A') + (key-'A'))%26 + 'A'));
+            }
+            putchar('\n');
+        }
+        else if(choice==2){
+            printf("\nEnter Cipher Text: ");
+            if(!fgets(t,sizeof t,stdin)) break; strip(t);
+            printf("\n\nEnter the key value: ");
+            if(!fgets(k,sizeof k,stdin)) break; strip(k);
+
+            for(size_t i=0,j=0;i<strlen(t);++i){
+                char c = toupper((unsigned char)t[i]);
+                if(c<'A'||c>'Z'){ putchar(t[i]); continue; }
+                char key = toupper((unsigned char)k[j++%strlen(k)]);
+                putchar((char)(((c-'A') + 26 - (key-'A'))%26 + 'A'));
+            }
+            putchar('\n');
+        }
+        else puts("Please Enter Valid Option.");
+    }
+    return 0;
 }
-void encipher()
-{
-unsigned int i,j;
-char input[50],key[10];
-printf("\n\nEnter Plain Text: ");
-scanf("%s",input);
-printf("\nEnter Key Value: ");
-scanf("%s",key);
-printf("\nResultant Cipher Text: ");
-for(i=0,j=0;i<strlen(input);i++,j++)
-{
-if(j>=strlen(key))
-{ j=0;
-}
-printf("%c",65+(((toupper(input[i])-65)+(toupper(key[j])-
-65))%26));
-}}
-void decipher()
-{
-unsigned int i,j;
-char input[50],key[10];
-int value;
-printf("\n\nEnter Cipher Text: ");
-scanf("%s",input);
- printf("\n\nEnter the key value: ");
-scanf("%s",key);
-for(i=0,j=0;i<strlen(input);i++,j++)
-{
-if(j>=strlen(key))
-{ j=0; }
-value = (toupper(input[i])-64)-(toupper(key[j])-64);
-if( value < 0)
-{ value = value * -1;
-}
-printf("%c",65 + (value % 26));}}
 ```
 ## OUTPUT:
 <img width="457" height="650" alt="image" src="https://github.com/user-attachments/assets/46f8d0c4-1f7c-44af-8bec-ca94d4bbf491" />
